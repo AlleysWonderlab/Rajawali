@@ -6,10 +6,13 @@ import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.view.MotionEvent;
+import android.view.View;
 
 import org.rajawali3d.Object3D;
-import org.rajawali3d.cameras.ArcballCamera;
+import org.rajawali3d.cameras.HorizontalCamera;
 import org.rajawali3d.debug.CoordinateTrident;
 import org.rajawali3d.debug.DebugVisualizer;
 import org.rajawali3d.debug.GridFloor;
@@ -21,6 +24,8 @@ import org.rajawali3d.materials.methods.DiffuseMethod;
 import org.rajawali3d.materials.methods.SpecularMethod;
 import org.rajawali3d.materials.textures.ATexture;
 import org.rajawali3d.materials.textures.StreamingTexture;
+import org.rajawali3d.materials.textures.Texture;
+import org.rajawali3d.math.vector.Vector3;
 import org.rajawali3d.primitives.Cube;
 import org.rajawali3d.primitives.Sphere;
 
@@ -31,7 +36,8 @@ public class VideoTextureFragment extends AExampleFragment {
         return new VideoTextureRenderer(getActivity(), this);
     }
 
-    private final class VideoTextureRenderer extends AExampleRenderer {
+
+    private final class VideoTextureRenderer extends AExampleRenderer implements View.OnTouchListener {
         private MediaPlayer mMediaPlayer;
         private StreamingTexture mVideoTexture;
 
@@ -62,7 +68,7 @@ public class VideoTextureFragment extends AExampleFragment {
             }
 
             mMediaPlayer = MediaPlayer.create(getContext(),
-                    R.raw.sintel_trailer_480p);
+                    Uri.parse("https://v-2-alleys-co.s3.dualstack.ap-northeast-1.amazonaws.com/XQ/h_kFOVYe1OVSC6kR855w-navi.mp4"));
             mMediaPlayer.setLooping(true);
 
             mVideoTexture = new StreamingTexture("sintelTrailer", mMediaPlayer);
@@ -81,38 +87,73 @@ public class VideoTextureFragment extends AExampleFragment {
 
 //			Plane screen = new Plane(3, 2, 2, 2, Vector3.Axis.Z);
             Sphere screen = new Sphere(4, 10, 10,
-                    (float) ((float) 80 / 180 * Math.PI),
-                    (float) ((float) 80 / 180 * Math.PI),
-                    (float) ((float) 67.5 / 180 * Math.PI),
-                    (float) ((float) 45 / 180 * Math.PI));
-
-            screen.setColor(Color.TRANSPARENT);
-            screen.setMaterial(material);
-            getCurrentScene().addChild(screen);
-
-            Sphere screen2 = new Sphere(4, 10, 10,
                     (float) ((float) 0 / 180 * Math.PI),
                     (float) ((float) 80 / 180 * Math.PI),
                     (float) ((float) 67.5 / 180 * Math.PI),
                     (float) ((float) 45 / 180 * Math.PI));
-            screen2.setColor(Color.TRANSPARENT);
-            screen2.setMaterial(material);
-            getCurrentScene().addChild(screen2);
 
-            Sphere screen3 = new Sphere(4, 10, 10,
-                    (float) ((float) 280 / 180 * Math.PI),
-                    (float) ((float) 80 / 180 * Math.PI),
-                    (float) ((float) 67.5 / 180 * Math.PI),
-                    (float) ((float) 45 / 180 * Math.PI));
-            screen3.setColor(Color.TRANSPARENT);
-            screen3.setMaterial(material);
-            getCurrentScene().addChild(screen3);
+            screen.setColor(Color.BLACK);
+            screen.setMaterial(material);
+            getCurrentScene().addChild(screen);
 
-            getCurrentCamera().enableLookAt();
-            getCurrentCamera().setLookAt(0, 0, 0);
+            Material imgMaterial = new Material();
+            try {
+                Texture sphereMapTexture = new Texture("right", R.drawable.right);
+                imgMaterial.addTexture(sphereMapTexture);
 
-            ArcballCamera arcball = new ArcballCamera(mContext, ((Activity) mContext).findViewById(R.id.content_frame), screen);
-            arcball.setPosition(4, 4, 4);
+                Sphere screen2 = new Sphere(4, 10, 10,
+                        (float) ((float) 90 / 180 * Math.PI),
+                        (float) ((float) 80 / 180 * Math.PI),
+                        (float) ((float) 67.5 / 180 * Math.PI),
+                        (float) ((float) 45 / 180 * Math.PI));
+                screen2.setColor(Color.BLACK);
+                screen2.setMaterial(imgMaterial);
+                getCurrentScene().addChild(screen2);
+
+
+                imgMaterial = new Material();
+                sphereMapTexture = new Texture("left", R.drawable.left);
+                imgMaterial.addTexture(sphereMapTexture);
+//
+                Sphere screen3 = new Sphere(4, 10, 10,
+                        (float) ((float) 270 / 180 * Math.PI),
+                        (float) ((float) 80 / 180 * Math.PI),
+                        (float) ((float) 67.5 / 180 * Math.PI),
+                        (float) ((float) 45 / 180 * Math.PI));
+                screen3.setColor(Color.BLACK);
+                screen3.setMaterial(imgMaterial);
+                getCurrentScene().addChild(screen3);
+
+            } catch (ATexture.TextureException e) {
+                e.printStackTrace();
+            }
+
+
+//            ChaseCamera chaseCamera = new ChaseCamera(new Vector3(0, 0, 0));
+//            // -- tell the camera which object to chase
+//            chaseCamera.setLinkedObject(screen);
+//            chaseCamera.setCameraPitch(180);
+//            // -- set the far plane to 1000 so that we actually see the sky sphere
+//            chaseCamera.setFarPlane(1000);
+//            getCurrentScene().replaceAndSwitchCamera(chaseCamera, 0);
+
+//            final HorizontalCamera camera = new HorizontalCamera(this, );
+//            getCurrentScene().replaceAndSwitchCamera(camera, 0);
+////            camera.setRotation(Vector3.Y, 90 / 180 * Math.PI);
+//            camera.setRotation(Vector3.Y, 225);
+
+//            camera.setLookAt(360, 0, 0);
+//            camera.setCameraYaw(30 / 180 * Math.PI);
+//            camera.setCameraOrientation(new Quaternion(Vector3.Y, 60 / 180 * Math.PI));
+//            camera.setCameraPitch(200 / 180 * Math.PI);
+//            camera.setCameraRoll(200 / 180 * Math.PI);
+
+//            getCurrentCamera().enableLookAt();
+//            getCurrentCamera().setLookAt(0, 0, 0);
+//
+            HorizontalCamera arcball = new HorizontalCamera(mContext, ((Activity) mContext).findViewById(R.id.content_frame), screen);
+            arcball.setPosition(0, 0, 0);
+            arcball.setRotation(Vector3.Axis.Y, -130);
             getCurrentScene().replaceAndSwitchCamera(getCurrentCamera(), arcball);
 
 //            // -- animate the spot light
@@ -167,6 +208,10 @@ public class VideoTextureFragment extends AExampleFragment {
             mMediaPlayer.release();
         }
 
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            return false;
+        }
     }
 
 }

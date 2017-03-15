@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+
 import org.rajawali3d.Object3D;
 import org.rajawali3d.cameras.ChaseCamera;
 import org.rajawali3d.examples.R;
@@ -27,7 +28,7 @@ import org.rajawali3d.primitives.Sphere;
 import org.rajawali3d.view.ISurface;
 
 public class ChaseCameraFragment extends AExampleFragment implements
-    OnSeekBarChangeListener {
+        OnSeekBarChangeListener {
 
     private SeekBar mSeekBarX, mSeekBarY, mSeekBarZ;
     private Vector3 mCameraOffset;
@@ -85,7 +86,7 @@ public class ChaseCameraFragment extends AExampleFragment implements
     public void onProgressChanged(SeekBar seekBar, int progress,
                                   boolean fromUser) {
         mCameraOffset.setAll((mSeekBarX.getProgress() * 0.2f) - 10,
-            (mSeekBarY.getProgress() * 0.2f) - 10, (mSeekBarZ.getProgress() * 0.2f));
+                (mSeekBarY.getProgress() * 0.2f) - 10, (mSeekBarZ.getProgress() * 0.2f));
         ((ChaseCameraRenderer) mRenderer).setCameraOffset(mCameraOffset);
     }
 
@@ -185,6 +186,7 @@ public class ChaseCameraFragment extends AExampleFragment implements
         public void setCameraOffset(Vector3 offset) {
             // -- change the camera offset
             ((ChaseCamera) getCurrentCamera()).setCameraOffset(offset);
+            System.out.println("getCurrentCamera() :::: " + getCurrentCamera());
         }
 
         @Override
