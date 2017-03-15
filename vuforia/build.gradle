@@ -57,6 +57,7 @@ android {
     tasks.withType(JavaCompile) {
         compileTask -> compileTask.dependsOn ndkBuild
     }
+    buildToolsVersion '25.0.0'
 }
 
 dependencies {
