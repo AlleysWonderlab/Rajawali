@@ -86,7 +86,7 @@ public class VideoTextureFragment extends AExampleFragment {
             getCurrentScene().addChild(debugViz);
 
 //			Plane screen = new Plane(3, 2, 2, 2, Vector3.Axis.Z);
-            Sphere screen = new Sphere(4, 10, 10,
+            Sphere screen = new Sphere(5, 10, 10,
                     (float) ((float) 0 / 180 * Math.PI),
                     (float) ((float) 80 / 180 * Math.PI),
                     (float) ((float) 67.5 / 180 * Math.PI),
@@ -102,7 +102,7 @@ public class VideoTextureFragment extends AExampleFragment {
                 imgMaterial.addTexture(sphereMapTexture);
 
                 Sphere screen2 = new Sphere(4, 10, 10,
-                        (float) ((float) 90 / 180 * Math.PI),
+                        (float) ((float) 80 / 180 * Math.PI),
                         (float) ((float) 80 / 180 * Math.PI),
                         (float) ((float) 67.5 / 180 * Math.PI),
                         (float) ((float) 45 / 180 * Math.PI));
@@ -116,7 +116,7 @@ public class VideoTextureFragment extends AExampleFragment {
                 imgMaterial.addTexture(sphereMapTexture);
 //
                 Sphere screen3 = new Sphere(4, 10, 10,
-                        (float) ((float) 270 / 180 * Math.PI),
+                        (float) ((float) 280 / 180 * Math.PI),
                         (float) ((float) 80 / 180 * Math.PI),
                         (float) ((float) 67.5 / 180 * Math.PI),
                         (float) ((float) 45 / 180 * Math.PI));

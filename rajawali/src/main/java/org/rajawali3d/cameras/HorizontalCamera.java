@@ -213,12 +213,11 @@ public class HorizontalCamera extends Camera {
 //            mIsRotating = true;
 //            updateRotation(event2.getX(), event2.getY());
             if (distanceX > 0){
-                setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) + 1);
+                setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) + 1.5);
 
             }else{
-                setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) - 1);
+                setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) - 1.5);
             }
-            System.out.println("getRot :::: " + Math.toDegrees(getRotY()));
             return false;
         }
     }
