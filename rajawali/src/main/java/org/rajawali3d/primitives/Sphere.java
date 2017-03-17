@@ -124,117 +124,16 @@ public class Sphere extends Object3D {
 
     protected void init(boolean createVBOs) {
         int numVertices = (mSegmentsW + 1) * (mSegmentsH + 1);
-        int numIndices = 2 * mSegmentsW * (mSegmentsH - 1) * 3;
 
-//        float[] vertices = new float[numVertices * 3];
-        ArrayList<Float> vertices = new ArrayList<>();
-        ArrayList<Float> vertices2 = new ArrayList<>();
-//        float[] normals = new float[numVertices * 3];
-        ArrayList<Float> normals = new ArrayList<>();
-        ArrayList<Float> normals2 = new ArrayList<>();
-//        int[] indices = new int[numIndices];
+        float[] vertices = new float[numVertices * 3];
+        float[] normals = new float[numVertices * 3];
         ArrayList<Integer> indices = new ArrayList<>();
-        ArrayList<Integer> indices2 = new ArrayList<>();
 
-//        int vertIndex = 0, index = 0;
         final float normLen = 1.0f / mRadius;
-
-//        for (int j = 0; j <= mSegmentsH; ++j) {
-//            float horAngle = (float) (Math.PI * j / mSegmentsH);
-//            float z = mRadius * (float) Math.cos(horAngle);
-//            float ringRadius = mRadius * (float) Math.sin(horAngle);
-//            for (int i = 0; i <= mSegmentsW; ++i) {
-//                float verAngle = (float) (2.0f * Math.PI * i / mSegmentsW);
-//                float x = ringRadius * (float) Math.cos(verAngle);
-//                float y = ringRadius * (float) Math.sin(verAngle);
-//
-////                System.out.println("b j - i :::: " + j + " - " + i);
-////                System.out.println("b x :::: " + x);
-////                System.out.println("b y :::: " + y);
-////                System.out.println("b z :::: " + z);
-//
-////                normals[vertIndex] = x * normLen;
-////                vertices[vertIndex++] = x;
-////                normals[vertIndex] = z * normLen;
-////                vertices[vertIndex++] = z;
-////                normals[vertIndex] = y * normLen;
-////                vertices[vertIndex++] = y;
-//
-////                System.out.println("Math.toDegrees(horAngle) :::: " + (int) Math.toDegrees(horAngle));
-////                if ((int) Math.toDegrees(horAngle) == 90) {
-////                    if (Math.toDegrees(verAngle) >= 90 && Math.toDegrees(verAngle) <= 270) {
-//                normals.add(x * normLen);
-//                normals.add(z * normLen);
-//                normals.add(y * normLen);
-//
-//                vertices.add(x);
-//                vertices.add(z);
-//                vertices.add(y);
-////                }
-//
-//
-////                if ((int) Math.toDegrees(horAngle) >= 0 && (int) Math.toDegrees(horAngle) <= 90)
-////                    if (Math.toDegrees(verAngle) > 90 && Math.toDegrees(verAngle) <= 270)
-//                if (i > 0 && j > 0) {
-//                    int a = (mSegmentsW + 1) * j + i;
-//                    int b = (mSegmentsW + 1) * j + i - 1;
-//                    int c = (mSegmentsW + 1) * (j - 1) + i - 1;
-//                    int d = (mSegmentsW + 1) * (j - 1) + i;
-//
-//                    if (j == mSegmentsH) {
-//                        indices.add(a);
-//                        indices.add(c);
-//                        indices.add(d);
-//                    } else if (j == 1) {
-//                        indices.add(a);
-//                        indices.add(b);
-//                        indices.add(c);
-//                    } else {
-//                        indices.add(a);
-//                        indices.add(b);
-//                        indices.add(c);
-//                        indices.add(a);
-//                        indices.add(c);
-//                        indices.add(d);
-//                    }
-//                }
-//
-//
-//            }
-//        }
-
-//        float phiStart = (float) (230 / 180 * Math.PI);
-//        float phiLength = (float) ((float) 80 / 180 * Math.PI);
-//        float thetaStart = (float) ((float) 67.5 / 180 * Math.PI);
-//        float thetaLength = (float) ((float) 45 / 180 * Math.PI);
         float thetaEnd = mThetaStart + mThetaLength;
         int[][] grid = new int[mSegmentsH + 1][mSegmentsW + 1];
 
-//        for (j = 0; j <= mSegmentsH; j++) {
-//            float v = (float) j / (float) mSegmentsH;
-//            for (i = 0; i <= mSegmentsW; i++) {
-//                float u = (float) i / (float) mSegmentsW;
-//
-//                float x = (float) -(mRadius * Math.cos(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength));
-//                float y = (float) (mRadius * Math.cos(thetaStart + v * thetaLength));
-//                float z = (float) (mRadius * Math.sin(phiStart + u * phiLength) * Math.sin(thetaStart + v * thetaLength));
-//
-//                System.out.println("j - i :::: " + j + " - " + i);
-//                System.out.println("x :::: " + x);
-//                System.out.println("y :::: " + y);
-//                System.out.println("z :::: " + z);
-//
-//                vertices2.add(x);
-//                vertices2.add(y);
-//                vertices2.add(z);
-//
-//
-//                normals2.add(x * normLen);
-//                normals2.add(y * normLen);
-//                normals2.add(z * normLen);
-//            }
-//        }
-
+        int index = 0;
         int gridIndex = 0;
         for (int j = 0; j <= mSegmentsH; j++) {
             float v = (float) j / (float) mSegmentsH;
@@ -245,109 +144,36 @@ public class Sphere extends Object3D {
                 float y = (float) (mRadius * Math.cos(mThetaStart + v * mThetaLength));
                 float z = (float) (mRadius * Math.sin(mPhiStart + u * mPhiLength) * Math.sin(mThetaStart + v * mThetaLength));
 
-//                System.out.println("j - i :::: " + j + " - " + i);
-//                System.out.println("x :::: " + x);
-//                System.out.println("y :::: " + y);
-//                System.out.println("z :::: " + z);
-
-                vertices2.add(x);
-                vertices2.add(y);
-                vertices2.add(z);
-
-
-                normals2.add(x * normLen);
-                normals2.add(y * normLen);
-                normals2.add(z * normLen);
+                vertices[index] = x;
+                normals[index++] = x * normLen;
+                vertices[index] = y;
+                normals[index++] = y * normLen;
+                vertices[index] = z;
+                normals[index++] = z * normLen;
 
                 grid[j][i] = gridIndex++;
             }
         }
 
         for (int j = 0; j < mSegmentsH; j++) {
-            System.out.println("indices " + j + ":::: " + indices2.size());
             for (int i = 0; i < mSegmentsW; i++) {
                 int a = grid[j][i + 1];
                 int b = grid[j][i];
                 int c = grid[j + 1][i];
                 int d = grid[j + 1][i + 1];
 
-
                 if (j != 0 || mThetaStart > 0) {
-                    indices2.add(a);
-                    indices2.add(b);
-                    indices2.add(d);
+                    indices.add(a);
+                    indices.add(b);
+                    indices.add(d);
                 }
                 if (j != mSegmentsH - 1 || thetaEnd < Math.PI) {
-                    indices2.add(b);
-                    indices2.add(c);
-                    indices2.add(d);
+                    indices.add(b);
+                    indices.add(c);
+                    indices.add(d);
                 }
-
-//                if (j != 0 || thetaStart > 0) indices.push(a, b, d);
-//                if (j != mSegmentsH - 1 || thetaEnd < Math.PI) indices.push(b, c, d);
             }
         }
-//
-//            var verticesRow = [];
-//
-//
-//            for ( ix = 0; ix <= widthSegments; ix ++ ) {
-//
-//                var u = ix / widthSegments;
-//
-//                // vertex
-//
-//                vertex.x = - radius * Math.cos( phiStart + u * phiLength ) * Math.sin( thetaStart + v * thetaLength );
-//                vertex.y = radius * Math.cos( thetaStart + v * thetaLength );
-//                vertex.z = radius * Math.sin( phiStart + u * phiLength ) * Math.sin( thetaStart + v * thetaLength );
-//
-//                vertices.push( vertex.x, vertex.y, vertex.z );
-//
-//                // normal
-//
-//                normal.set( vertex.x, vertex.y, vertex.z ).normalize();
-//                normals.push( normal.x, normal.y, normal.z );
-//
-//                // uv
-//
-//                uvs.push( u, 1 - v );
-//
-//                verticesRow.push( index ++ );
-//
-//            }
-//
-//            grid.push( verticesRow );
-//
-//        }
-//
-//        for (j = 0; j <= mSegmentsH; ++j) {
-//            for (i = 0; i <= mSegmentsW; ++i) {
-//                if (i > 0 && j > 0) {
-//                    int a = (mSegmentsW + 1) * j + i;
-//                    int b = (mSegmentsW + 1) * j + i - 1;
-//                    int c = (mSegmentsW + 1) * (j - 1) + i - 1;
-//                    int d = (mSegmentsW + 1) * (j - 1) + i;
-//
-//                    if (j == mSegmentsH) {
-//                        indices.add(a);
-//                        indices.add(c);
-//                        indices.add(d);
-//                    } else if (j == 1) {
-//                        indices.add(a);
-//                        indices.add(b);
-//                        indices.add(c);
-//                    } else {
-//                        indices.add(a);
-//                        indices.add(b);
-//                        indices.add(c);
-//                        indices.add(a);
-//                        indices.add(c);
-//                        indices.add(d);
-//                    }
-//                }
-//            }
-//        }
-
 
         float[] textureCoords = null;
         if (mCreateTextureCoords)
@@ -365,70 +191,12 @@ public class Sphere extends Object3D {
                 }
             }
         }
-//        System.out.println("index :::: " + index);
-        System.out.println("indices :::: " + indices.size());
-        System.out.println("indices2 :::: " + indices2.size());
-        System.out.println("vertices :::: " + vertices.size());
-        System.out.println("vertices2 :::: " + vertices2.size());
-//
-//        for (
-//                Integer indice : indices)
-//
-//        {
-//            System.out.println("indice ::::: " + indice);
-//        }
-//        System.out.println("-------------");
-//        for (
-//                Float vertice : vertices) {
-//            System.out.println("vertice ::::: " + vertice);
-//        }
-
-        float[] colors = null;
-
-//        if (mCreateVertexColorBuffer) {
-//            int numColors = numVertices * 4;
-//            colors = new float[numColors];
-//            for (int j = 0; j < numColors; j += 4) {
-//                colors[j] = 1.0f;
-//                colors[j + 1] = 0;
-//                colors[j + 2] = 0;
-//                colors[j + 3] = 1.0f;
-//            }
-//        }
-
-        float[] verticess = new float[vertices2.size()];
-        int index = 0;
-        for (
-                Float vertice : vertices2)
-
-        {
-            verticess[index++] = vertice;
-        }
 
         index = 0;
-        float[] normalss = new float[normals2.size()];
-        for (
-                Float normal : normals2)
-
-        {
-            normalss[index++] = normal;
+        int[] indicess = new int[indices.size()];
+        for (int i = indices.size() - 1; i >= 0; i--) {
+            indicess[index++] = indices.get(i);
         }
-
-        index = 0;
-        int[] indicess = new int[indices2.size()];
-        for (int i = indices2.size() - 1; i >= 0; i--) {
-            indicess[index++] = indices2.get(i);
-        }
-//        for (
-//                int indice : indices2)
-//
-//        {
-//            indicess[index++] = indice;
-//        }
-
-        for (float textureCoord : textureCoords) {
-            System.out.println(textureCoord);
-        }
-        setData(verticess, normalss, textureCoords, null, indicess, createVBOs);
+        setData(vertices, normals, textureCoords, null, indicess, createVBOs);
     }
 }

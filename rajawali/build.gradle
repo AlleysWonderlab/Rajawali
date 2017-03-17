@@ -4,41 +4,17 @@ apply plugin: 'signing'
 apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.sangcomz'
 
-//String getVersionString() {
-//    String v = VERSION_NAME.replaceAll(".(0)\$", "." + buildNumber())
-//    v = isTag() ? v : v + "-SNAPSHOT"
-//    return v
-//}
-
-//group = GROUP
-//version = getVersionString()
-
-
 if (isReleaseBuild()) {
     status = 'release'
 } else {
     status = 'integration'
 }
 
-//task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
-//
-//    reports {
-//        xml.enabled = true
-//        html.enabled = true
-//    }
-//
-//    jacocoClasspath = configurations['androidJacocoAnt']
-//
-//    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-//    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-//    def mainSrc = "${project.projectDir}/src/main/java"
-//
-//    sourceDirectories = files([mainSrc])
-//    classDirectories = files([debugTree])
-//    executionData = files(["${buildDir}/jacoco/testDebugUnitTest.exec",
-//                           "${buildDir}/outputs/code-coverage/connected/coverage.ec"
-//            ])
-//}
+buildscript {
+    ext {
+        exo_version = 'r2.2.0'
+    }
+}
 
 android {
     compileSdkVersion rootProject.compileSdk
@@ -81,6 +57,6 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.4'
     // Set this dependency to use JUnit 4 rules
     androidTestCompile 'com.android.support.test:rules:0.4'
-}
 
-//apply from: '../maven_push.gradle'
+    compile "com.google.android.exoplayer:exoplayer:$exo_version"
+}

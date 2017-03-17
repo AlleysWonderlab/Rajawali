@@ -122,8 +122,6 @@ public class HorizontalCamera extends Camera {
             Quaternion q = new Quaternion(mStartOrientation);
             q.multiply(mCurrentOrientation);
 
-//            mEmpty.setOrientation(q);
-            System.out.println(" getRotY() :::: " + Math.toDegrees(getRotY()));
             setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) + 1);
         }
     }
@@ -227,7 +225,6 @@ public class HorizontalCamera extends Camera {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             double fov = Math.max(30, Math.min(50, mStartFOV * (1.0 / detector.getScaleFactor())));
-            System.out.println("fov :::: " + fov);
             setFieldOfView(fov);
             return true;
         }
