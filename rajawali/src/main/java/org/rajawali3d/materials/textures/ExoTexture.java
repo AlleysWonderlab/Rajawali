@@ -7,7 +7,7 @@ import android.view.Surface;
 
 import com.google.android.exoplayer2.SimpleExoPlayer;
 
-public abstract class ExoTexture extends ATexture {
+public class ExoTexture extends ATexture {
 
     public interface ISurfaceListener {
         void setSurface(Surface surface);
@@ -18,12 +18,20 @@ public abstract class ExoTexture extends ATexture {
     private SurfaceTexture mSurfaceTexture;
     private Surface mSurface;
 
+    public ExoTexture(ExoTexture other) {
+        super(other);
+    }
+
+
     public ExoTexture(String textureName, SimpleExoPlayer exoPlayer) {
         super(TextureType.VIDEO_TEXTURE, textureName);
         this.exoPlayer = exoPlayer;
         setGLTextureType(GLES11Ext.GL_TEXTURE_EXTERNAL_OES);
     }
 
+    public ExoTexture clone() {
+        return new ExoTexture(this);
+    }
 
 
     void add() throws TextureException {
