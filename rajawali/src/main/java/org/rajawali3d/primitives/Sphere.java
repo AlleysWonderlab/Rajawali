@@ -139,69 +139,69 @@ public class Sphere extends Object3D {
 //        int vertIndex = 0, index = 0;
         final float normLen = 1.0f / mRadius;
 
-        for (int j = 0; j <= mSegmentsH; ++j) {
-            float horAngle = (float) (Math.PI * j / mSegmentsH);
-            float z = mRadius * (float) Math.cos(horAngle);
-            float ringRadius = mRadius * (float) Math.sin(horAngle);
-            for (int i = 0; i <= mSegmentsW; ++i) {
-                float verAngle = (float) (2.0f * Math.PI * i / mSegmentsW);
-                float x = ringRadius * (float) Math.cos(verAngle);
-                float y = ringRadius * (float) Math.sin(verAngle);
-
-//                System.out.println("b j - i :::: " + j + " - " + i);
-//                System.out.println("b x :::: " + x);
-//                System.out.println("b y :::: " + y);
-//                System.out.println("b z :::: " + z);
-
-//                normals[vertIndex] = x * normLen;
-//                vertices[vertIndex++] = x;
-//                normals[vertIndex] = z * normLen;
-//                vertices[vertIndex++] = z;
-//                normals[vertIndex] = y * normLen;
-//                vertices[vertIndex++] = y;
-
-//                System.out.println("Math.toDegrees(horAngle) :::: " + (int) Math.toDegrees(horAngle));
-//                if ((int) Math.toDegrees(horAngle) == 90) {
-//                    if (Math.toDegrees(verAngle) >= 90 && Math.toDegrees(verAngle) <= 270) {
-                normals.add(x * normLen);
-                normals.add(z * normLen);
-                normals.add(y * normLen);
-
-                vertices.add(x);
-                vertices.add(z);
-                vertices.add(y);
+//        for (int j = 0; j <= mSegmentsH; ++j) {
+//            float horAngle = (float) (Math.PI * j / mSegmentsH);
+//            float z = mRadius * (float) Math.cos(horAngle);
+//            float ringRadius = mRadius * (float) Math.sin(horAngle);
+//            for (int i = 0; i <= mSegmentsW; ++i) {
+//                float verAngle = (float) (2.0f * Math.PI * i / mSegmentsW);
+//                float x = ringRadius * (float) Math.cos(verAngle);
+//                float y = ringRadius * (float) Math.sin(verAngle);
+//
+////                System.out.println("b j - i :::: " + j + " - " + i);
+////                System.out.println("b x :::: " + x);
+////                System.out.println("b y :::: " + y);
+////                System.out.println("b z :::: " + z);
+//
+////                normals[vertIndex] = x * normLen;
+////                vertices[vertIndex++] = x;
+////                normals[vertIndex] = z * normLen;
+////                vertices[vertIndex++] = z;
+////                normals[vertIndex] = y * normLen;
+////                vertices[vertIndex++] = y;
+//
+////                System.out.println("Math.toDegrees(horAngle) :::: " + (int) Math.toDegrees(horAngle));
+////                if ((int) Math.toDegrees(horAngle) == 90) {
+////                    if (Math.toDegrees(verAngle) >= 90 && Math.toDegrees(verAngle) <= 270) {
+//                normals.add(x * normLen);
+//                normals.add(z * normLen);
+//                normals.add(y * normLen);
+//
+//                vertices.add(x);
+//                vertices.add(z);
+//                vertices.add(y);
+////                }
+//
+//
+////                if ((int) Math.toDegrees(horAngle) >= 0 && (int) Math.toDegrees(horAngle) <= 90)
+////                    if (Math.toDegrees(verAngle) > 90 && Math.toDegrees(verAngle) <= 270)
+//                if (i > 0 && j > 0) {
+//                    int a = (mSegmentsW + 1) * j + i;
+//                    int b = (mSegmentsW + 1) * j + i - 1;
+//                    int c = (mSegmentsW + 1) * (j - 1) + i - 1;
+//                    int d = (mSegmentsW + 1) * (j - 1) + i;
+//
+//                    if (j == mSegmentsH) {
+//                        indices.add(a);
+//                        indices.add(c);
+//                        indices.add(d);
+//                    } else if (j == 1) {
+//                        indices.add(a);
+//                        indices.add(b);
+//                        indices.add(c);
+//                    } else {
+//                        indices.add(a);
+//                        indices.add(b);
+//                        indices.add(c);
+//                        indices.add(a);
+//                        indices.add(c);
+//                        indices.add(d);
+//                    }
 //                }
-
-
-//                if ((int) Math.toDegrees(horAngle) >= 0 && (int) Math.toDegrees(horAngle) <= 90)
-//                    if (Math.toDegrees(verAngle) > 90 && Math.toDegrees(verAngle) <= 270)
-                if (i > 0 && j > 0) {
-                    int a = (mSegmentsW + 1) * j + i;
-                    int b = (mSegmentsW + 1) * j + i - 1;
-                    int c = (mSegmentsW + 1) * (j - 1) + i - 1;
-                    int d = (mSegmentsW + 1) * (j - 1) + i;
-
-                    if (j == mSegmentsH) {
-                        indices.add(a);
-                        indices.add(c);
-                        indices.add(d);
-                    } else if (j == 1) {
-                        indices.add(a);
-                        indices.add(b);
-                        indices.add(c);
-                    } else {
-                        indices.add(a);
-                        indices.add(b);
-                        indices.add(c);
-                        indices.add(a);
-                        indices.add(c);
-                        indices.add(d);
-                    }
-                }
-
-
-            }
-        }
+//
+//
+//            }
+//        }
 
 //        float phiStart = (float) (230 / 180 * Math.PI);
 //        float phiLength = (float) ((float) 80 / 180 * Math.PI);
@@ -385,16 +385,16 @@ public class Sphere extends Object3D {
 
         float[] colors = null;
 
-        if (mCreateVertexColorBuffer) {
-            int numColors = numVertices * 4;
-            colors = new float[numColors];
-            for (int j = 0; j < numColors; j += 4) {
-                colors[j] = 1.0f;
-                colors[j + 1] = 0;
-                colors[j + 2] = 0;
-                colors[j + 3] = 1.0f;
-            }
-        }
+//        if (mCreateVertexColorBuffer) {
+//            int numColors = numVertices * 4;
+//            colors = new float[numColors];
+//            for (int j = 0; j < numColors; j += 4) {
+//                colors[j] = 1.0f;
+//                colors[j + 1] = 0;
+//                colors[j + 2] = 0;
+//                colors[j + 3] = 1.0f;
+//            }
+//        }
 
         float[] verticess = new float[vertices2.size()];
         int index = 0;
@@ -406,9 +406,9 @@ public class Sphere extends Object3D {
         }
 
         index = 0;
-        float[] normalss = new float[normals.size()];
+        float[] normalss = new float[normals2.size()];
         for (
-                Float normal : normals)
+                Float normal : normals2)
 
         {
             normalss[index++] = normal;
@@ -426,6 +426,9 @@ public class Sphere extends Object3D {
 //            indicess[index++] = indice;
 //        }
 
-        setData(verticess, normalss, textureCoords, colors, indicess, createVBOs);
+        for (float textureCoord : textureCoords) {
+            System.out.println(textureCoord);
+        }
+        setData(verticess, normalss, textureCoords, null, indicess, createVBOs);
     }
 }

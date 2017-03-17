@@ -102,7 +102,7 @@ public class VideoTextureFragment extends AExampleFragment {
                 imgMaterial.addTexture(sphereMapTexture);
 
                 Sphere screen2 = new Sphere(4, 10, 10,
-                        (float) ((float) 80 / 180 * Math.PI),
+                        (float) ((float) 90 / 180 * Math.PI),
                         (float) ((float) 80 / 180 * Math.PI),
                         (float) ((float) 67.5 / 180 * Math.PI),
                         (float) ((float) 45 / 180 * Math.PI));
@@ -116,7 +116,7 @@ public class VideoTextureFragment extends AExampleFragment {
                 imgMaterial.addTexture(sphereMapTexture);
 //
                 Sphere screen3 = new Sphere(4, 10, 10,
-                        (float) ((float) 280 / 180 * Math.PI),
+                        (float) ((float) 270 / 180 * Math.PI),
                         (float) ((float) 80 / 180 * Math.PI),
                         (float) ((float) 67.5 / 180 * Math.PI),
                         (float) ((float) 45 / 180 * Math.PI));

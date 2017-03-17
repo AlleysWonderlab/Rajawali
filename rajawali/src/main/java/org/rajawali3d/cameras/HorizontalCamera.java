@@ -212,10 +212,10 @@ public class HorizontalCamera extends Camera {
 //            }
 //            mIsRotating = true;
 //            updateRotation(event2.getX(), event2.getY());
-            if (distanceX > 0){
+            if (distanceX > 0) {
                 setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) + 1.5);
 
-            }else{
+            } else {
                 setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) - 1.5);
             }
             return false;
@@ -226,7 +226,8 @@ public class HorizontalCamera extends Camera {
             extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            double fov = Math.max(30, Math.min(100, mStartFOV * (1.0 / detector.getScaleFactor())));
+            double fov = Math.max(30, Math.min(50, mStartFOV * (1.0 / detector.getScaleFactor())));
+            System.out.println("fov :::: " + fov);
             setFieldOfView(fov);
             return true;
         }
