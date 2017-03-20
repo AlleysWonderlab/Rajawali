@@ -47,6 +47,7 @@ import org.rajawali3d.examples.examples.materials.AnimatedGIFTextureFragment;
 import org.rajawali3d.examples.examples.materials.BumpMappingFragment;
 import org.rajawali3d.examples.examples.materials.CustomMaterialShaderFragment;
 import org.rajawali3d.examples.examples.materials.CustomVertexShaderFragment;
+import org.rajawali3d.examples.examples.materials.ExoTextureFragment;
 import org.rajawali3d.examples.examples.materials.MaterialsFragment;
 import org.rajawali3d.examples.examples.materials.RawShaderFilesFragment;
 import org.rajawali3d.examples.examples.materials.SpecularAndAlphaFragment;
@@ -181,6 +182,7 @@ public final class DataSet {
                 new Example(R.string.example_materials_canvas, CanvasTextFragment.class),
                 new Example(R.string.example_materials_specular_alpha, SpecularAndAlphaFragment.class),
                 new Example(R.string.example_materials_video, VideoTextureFragment.class),
+                new Example(R.string.example_materials_exo_player, ExoTextureFragment.class),
                 new Example(R.string.example_materials_from_files, RawShaderFilesFragment.class),
                 new Example(R.string.example_materials_animated_gif, AnimatedGIFTextureFragment.class),
         }));

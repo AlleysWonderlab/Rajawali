@@ -9,10 +9,6 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 
 public class ExoTexture extends ATexture {
 
-    public interface ISurfaceListener {
-        void setSurface(Surface surface);
-    }
-
     private final int GL_TEXTURE_EXTERNAL_OES = 0x8D65;
     private SimpleExoPlayer exoPlayer;
     private SurfaceTexture mSurfaceTexture;

@@ -79,6 +79,7 @@
     <string name="example_materials_canvas">Canvas Text to Material</string>
     <string name="example_materials_specular_alpha">Specular Alpha</string>
     <string name="example_materials_video">Video Texture</string>
+    <string name="example_materials_exo_player">Exo Player Texture</string>
     <string name="example_materials_from_files">Shader Text Files</string>
     <string name="example_materials_animated_gif">Animated GIF Texture</string>
 
