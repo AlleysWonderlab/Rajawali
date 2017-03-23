@@ -8,7 +8,6 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 
 import org.rajawali3d.Object3D;
-import org.rajawali3d.math.MathUtil;
 import org.rajawali3d.math.Matrix4;
 import org.rajawali3d.math.Quaternion;
 import org.rajawali3d.math.vector.Vector2;
@@ -72,59 +71,10 @@ public class HorizontalCamera extends Camera {
         super.setProjectionMatrix(width, height);
     }
 
-    private void mapToSphere(final float x, final float y, Vector3 out) {
-        float lengthSquared = x * x + y * y;
-        if (lengthSquared > 1) {
-            out.setAll(x, y, 0);
-            out.normalize();
-        } else {
-            out.setAll(x, y, Math.sqrt(1 - lengthSquared));
-        }
-    }
-
-    private void mapToScreen(final float x, final float y, Vector2 out) {
-        out.setX((2 * x - mLastWidth) / mLastWidth);
-        out.setY(-(2 * y - mLastHeight) / mLastHeight);
-    }
-
-    private void startRotation(final float x, final float y) {
-        mapToScreen(x, y, mPrevScreenCoord);
-
-        mCurrScreenCoord.setAll(mPrevScreenCoord.getX(), mPrevScreenCoord.getY());
-
-
-        mIsRotating = true;
-    }
-
-    private void updateRotation(final float x, final float y) {
-        mapToScreen(x, y, mCurrScreenCoord);
-
-        applyRotation();
-    }
-
     private void endRotation() {
         mStartOrientation.multiply(mCurrentOrientation);
     }
 
-    private void applyRotation() {
-        if (mIsRotating) {
-            mapToSphere((float) mPrevScreenCoord.getX(), (float) mPrevScreenCoord.getY(), mPrevSphereCoord);
-            mapToSphere((float) mCurrScreenCoord.getX(), (float) mCurrScreenCoord.getY(), mCurrSphereCoord);
-
-            Vector3 rotationAxis = mPrevSphereCoord.clone();
-            rotationAxis.cross(mCurrSphereCoord);
-            rotationAxis.normalize();
-
-            double rotationAngle = Math.acos(Math.min(1, mPrevSphereCoord.dot(mCurrSphereCoord)));
-            mCurrentOrientation.fromAngleAxis(rotationAxis, MathUtil.radiansToDegrees(rotationAngle));
-            mCurrentOrientation.normalize();
-
-            Quaternion q = new Quaternion(mStartOrientation);
-            q.multiply(mCurrentOrientation);
-
-            setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) + 1);
-        }
-    }
 
     @Override
     public Matrix4 getViewMatrix() {
@@ -201,54 +151,7 @@ public class HorizontalCamera extends Camera {
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX, float distanceY) {
-//            System.out.println("distanceX :::: " + distanceX);
-//
-//            System.out.println("getViewMatrix :::: " + getViewMatrix());
-//            System.out.println("getOrientation :::: " + getOrientation());
-//            System.out.println("distanceY :::: " + distanceY);
-//            System.out.println("event2.getX() :::: " + event2.getX());
-//            if (!mIsRotating) {
-//                startRotation(event2.getX(), event2.getY());
-//                return false;
-//            }
-//            mIsRotating = true;
-//            updateRotation(event2.getX(), event2.getY());
-//            if (distanceX > 0) {
-//                setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) + 1.5);
-//
-//            } else {
-//                setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) - 1.5);
-//            }
-//            System.out.println("getFieldOfView :::: " + getFieldOfView());
-//            System.out.println("getFarPlane :::: " + getFarPlane());
-//            System.out.println("getNearPlane :::: " + getNearPlane());
-//            System.out.println("getFrustum().pointInFrustum(new Vector3(0.0, 0.0, 0.0)); :::: " + getFrustum().pointInFrustum(new Vector3(0.0, 0.0, 0.0)));
-//            System.out.println("Math.toDegrees(getRotY()) :::: " + Math.toDegrees(getRotY()));
-//            System.out.println("getScenePosition() :::: " + getScenePosition());
-//            int viewRatio = width / height;
-//            Double farHeight = 2 * Math.tan(getFieldOfView() / 2) * getFarPlane();
-//            Double farWidth = farHeight * viewRatio;
-//            System.out.println("height :::: " + height);
-//            System.out.println("width :::: " + width);
-//            System.out.println("viewRatio :::: " + viewRatio);
-//            System.out.println("farWidth :::: " + farWidth);
-//            System.out.println("farHeight :::: " + farHeight);
-//            System.out.println("!!!! fieldOfView ??  :::: " + 2.0 * Math.toDegrees(Math.atan((farWidth / 2.0) / getFarPlane())));
-
             cameraListener.onScroll(event1, event2, distanceX, distanceY);
-//            val viewRatio = viewportWidth.toFloat() / viewportHeight.toFloat()
-//            val farHeight = 2.0 * Math.tan(Math.toRadians(currentCamera.fieldOfView / 2.0)) * currentCamera.farPlane
-//            val farWidth = farHeight * viewRatio
-//            println("height :::: " + viewportHeight)
-//            println("width :::: " + viewportWidth)
-//            println("farPlane :::: " + currentCamera.farPlane)
-//            println("viewRatio :::: " + viewRatio)
-//            println("farWidth :::: " + farWidth)
-//            println("farHeight :::: " + farHeight)
-//            println("view ratio 2 :::: " + farWidth / farHeight)
-//            println("fieldOfView ??  :::: " + 2.0 * Math.toDegrees(Math.atan((farHeight / 2.0) / currentCamera.farPlane)))
-//            println("!!!! fieldOfView ??  :::: " + 2.0 * Math.toDegrees(Math.atan((farWidth / 2.0) / currentCamera.farPlane)))
-//            println("real fieldOfView ??  :::: " + currentCamera.fieldOfView)
             return false;
         }
     }
