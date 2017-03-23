@@ -201,7 +201,10 @@ public class HorizontalCamera extends Camera {
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX, float distanceY) {
-            System.out.println("distanceX :::: " + distanceX);
+//            System.out.println("distanceX :::: " + distanceX);
+//
+//            System.out.println("getViewMatrix :::: " + getViewMatrix());
+//            System.out.println("getOrientation :::: " + getOrientation());
 //            System.out.println("distanceY :::: " + distanceY);
 //            System.out.println("event2.getX() :::: " + event2.getX());
 //            if (!mIsRotating) {
@@ -210,12 +213,42 @@ public class HorizontalCamera extends Camera {
 //            }
 //            mIsRotating = true;
 //            updateRotation(event2.getX(), event2.getY());
-            if (distanceX > 0) {
-                setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) + 1.5);
+//            if (distanceX > 0) {
+//                setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) + 1.5);
+//
+//            } else {
+//                setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) - 1.5);
+//            }
+//            System.out.println("getFieldOfView :::: " + getFieldOfView());
+//            System.out.println("getFarPlane :::: " + getFarPlane());
+//            System.out.println("getNearPlane :::: " + getNearPlane());
+//            System.out.println("getFrustum().pointInFrustum(new Vector3(0.0, 0.0, 0.0)); :::: " + getFrustum().pointInFrustum(new Vector3(0.0, 0.0, 0.0)));
+//            System.out.println("Math.toDegrees(getRotY()) :::: " + Math.toDegrees(getRotY()));
+//            System.out.println("getScenePosition() :::: " + getScenePosition());
+//            int viewRatio = width / height;
+//            Double farHeight = 2 * Math.tan(getFieldOfView() / 2) * getFarPlane();
+//            Double farWidth = farHeight * viewRatio;
+//            System.out.println("height :::: " + height);
+//            System.out.println("width :::: " + width);
+//            System.out.println("viewRatio :::: " + viewRatio);
+//            System.out.println("farWidth :::: " + farWidth);
+//            System.out.println("farHeight :::: " + farHeight);
+//            System.out.println("!!!! fieldOfView ??  :::: " + 2.0 * Math.toDegrees(Math.atan((farWidth / 2.0) / getFarPlane())));
 
-            } else {
-                setRotation(Vector3.Axis.Y, Math.toDegrees(getRotY()) - 1.5);
-            }
+            cameraListener.onScroll(event1, event2, distanceX, distanceY);
+//            val viewRatio = viewportWidth.toFloat() / viewportHeight.toFloat()
+//            val farHeight = 2.0 * Math.tan(Math.toRadians(currentCamera.fieldOfView / 2.0)) * currentCamera.farPlane
+//            val farWidth = farHeight * viewRatio
+//            println("height :::: " + viewportHeight)
+//            println("width :::: " + viewportWidth)
+//            println("farPlane :::: " + currentCamera.farPlane)
+//            println("viewRatio :::: " + viewRatio)
+//            println("farWidth :::: " + farWidth)
+//            println("farHeight :::: " + farHeight)
+//            println("view ratio 2 :::: " + farWidth / farHeight)
+//            println("fieldOfView ??  :::: " + 2.0 * Math.toDegrees(Math.atan((farHeight / 2.0) / currentCamera.farPlane)))
+//            println("!!!! fieldOfView ??  :::: " + 2.0 * Math.toDegrees(Math.atan((farWidth / 2.0) / currentCamera.farPlane)))
+//            println("real fieldOfView ??  :::: " + currentCamera.fieldOfView)
             return false;
         }
     }
@@ -226,6 +259,7 @@ public class HorizontalCamera extends Camera {
         public boolean onScale(ScaleGestureDetector detector) {
             double fov = Math.max(30, Math.min(50, mStartFOV * (1.0 / detector.getScaleFactor())));
             setFieldOfView(fov);
+            cameraListener.onScale(detector);
             return true;
         }
 
@@ -233,6 +267,7 @@ public class HorizontalCamera extends Camera {
         public boolean onScaleBegin(ScaleGestureDetector detector) {
             mIsScaling = true;
             mIsRotating = false;
+            cameraListener.onScaleBegin(detector);
             return super.onScaleBegin(detector);
         }
 
@@ -240,6 +275,23 @@ public class HorizontalCamera extends Camera {
         public void onScaleEnd(ScaleGestureDetector detector) {
             mIsRotating = false;
             mIsScaling = false;
+            cameraListener.onScaleEnd(detector);
         }
+    }
+
+    private CameraListener cameraListener;
+
+    public void setCameraListener(CameraListener cameraListener) {
+        this.cameraListener = cameraListener;
+    }
+
+    public interface CameraListener {
+        void onScroll(MotionEvent event1, MotionEvent event2, float distanceX, float distanceY);
+
+        boolean onScale(ScaleGestureDetector detector);
+
+        boolean onScaleBegin(ScaleGestureDetector detector);
+
+        void onScaleEnd(ScaleGestureDetector detector);
     }
 }
