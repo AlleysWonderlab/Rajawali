@@ -10,7 +10,6 @@ import android.view.View;
 import org.rajawali3d.Object3D;
 import org.rajawali3d.math.Matrix4;
 import org.rajawali3d.math.Quaternion;
-import org.rajawali3d.math.vector.Vector2;
 import org.rajawali3d.math.vector.Vector3;
 
 /**
@@ -22,13 +21,7 @@ public class HorizontalCamera extends Camera {
     private View.OnTouchListener mGestureListener;
     private GestureDetector mDetector;
     private View mView;
-    private boolean mIsRotating;
     private boolean mIsScaling;
-    private Vector3 mCameraStartPos;
-    private Vector3 mPrevSphereCoord;
-    private Vector3 mCurrSphereCoord;
-    private Vector2 mPrevScreenCoord;
-    private Vector2 mCurrScreenCoord;
     private Quaternion mStartOrientation;
     private Quaternion mCurrentOrientation;
     private Object3D mEmpty;
@@ -57,11 +50,6 @@ public class HorizontalCamera extends Camera {
         mEmpty = new Object3D();
         mScratchMatrix = new Matrix4();
         mScratchVector = new Vector3();
-        mCameraStartPos = new Vector3();
-        mPrevSphereCoord = new Vector3();
-        mCurrSphereCoord = new Vector3();
-        mPrevScreenCoord = new Vector2();
-        mCurrScreenCoord = new Vector2();
         mStartOrientation = new Quaternion();
         mCurrentOrientation = new Quaternion();
     }
@@ -69,10 +57,6 @@ public class HorizontalCamera extends Camera {
     @Override
     public void setProjectionMatrix(int width, int height) {
         super.setProjectionMatrix(width, height);
-    }
-
-    private void endRotation() {
-        mStartOrientation.multiply(mCurrentOrientation);
     }
 
 
@@ -118,17 +102,15 @@ public class HorizontalCamera extends Camera {
 
                 mGestureListener = new View.OnTouchListener() {
                     public boolean onTouch(View v, MotionEvent event) {
+                        if (event.getAction() == MotionEvent.ACTION_DOWN){
+                            cameraListener.onEventStart();
+                        }
                         mScaleDetector.onTouchEvent(event);
-
+                        if (event.getAction() == MotionEvent.ACTION_UP){
+                            cameraListener.onEventEnd();
+                        }
                         if (!mIsScaling) {
                             mDetector.onTouchEvent(event);
-
-                            if (event.getAction() == MotionEvent.ACTION_UP) {
-                                if (mIsRotating) {
-                                    endRotation();
-                                    mIsRotating = false;
-                                }
-                            }
                         }
 
                         return true;
@@ -169,14 +151,12 @@ public class HorizontalCamera extends Camera {
         @Override
         public boolean onScaleBegin(ScaleGestureDetector detector) {
             mIsScaling = true;
-            mIsRotating = false;
             cameraListener.onScaleBegin(detector);
             return super.onScaleBegin(detector);
         }
 
         @Override
         public void onScaleEnd(ScaleGestureDetector detector) {
-            mIsRotating = false;
             mIsScaling = false;
             cameraListener.onScaleEnd(detector);
         }
@@ -196,5 +176,8 @@ public class HorizontalCamera extends Camera {
         boolean onScaleBegin(ScaleGestureDetector detector);
 
         void onScaleEnd(ScaleGestureDetector detector);
+
+        void onEventEnd();
+        void onEventStart();
     }
 }
