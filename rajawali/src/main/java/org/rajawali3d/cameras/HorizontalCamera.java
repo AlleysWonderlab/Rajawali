@@ -138,11 +138,30 @@ public class HorizontalCamera extends Camera {
         }
     }
 
+    private Double minScale = 50.0;
+    private Double maxScale = 30.0;
+
+    public Double getMinScale() {
+        return minScale;
+    }
+
+    public void setMinScale(Double minScale) {
+        this.minScale = minScale;
+    }
+
+    public Double getMaxScale() {
+        return maxScale;
+    }
+
+    public void setMaxScale(Double maxScale) {
+        this.maxScale = maxScale;
+    }
+
     private class ScaleListener
             extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            double fov = Math.max(30, Math.min(50, mStartFOV * (1.0 / detector.getScaleFactor())));
+            double fov = Math.max(maxScale, Math.min(minScale, mStartFOV * (1.0 / detector.getScaleFactor())));
             setFieldOfView(fov);
             cameraListener.onScale(detector);
             return true;
@@ -178,6 +197,7 @@ public class HorizontalCamera extends Camera {
         void onScaleEnd(ScaleGestureDetector detector);
 
         void onEventEnd();
+
         void onEventStart();
     }
 }
