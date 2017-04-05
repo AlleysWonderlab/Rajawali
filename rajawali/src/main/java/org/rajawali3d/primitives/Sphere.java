@@ -122,6 +122,10 @@ public class Sphere extends Object3D {
         init(createVBOs);
     }
 
+    public double getStartDegree() {
+        return Math.toDegrees(mPhiStart);
+    }
+
     protected void init(boolean createVBOs) {
         int numVertices = (mSegmentsW + 1) * (mSegmentsH + 1);
 
