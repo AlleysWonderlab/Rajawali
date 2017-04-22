@@ -24,14 +24,12 @@ import org.rajawali3d.lights.ALight;
 import org.rajawali3d.materials.Material;
 import org.rajawali3d.materials.plugins.FogMaterialPlugin;
 import org.rajawali3d.materials.plugins.FogMaterialPlugin.FogParams;
-import org.rajawali3d.materials.plugins.ShadowMapMaterialPlugin;
 import org.rajawali3d.materials.textures.ATexture;
 import org.rajawali3d.materials.textures.ATexture.TextureException;
 import org.rajawali3d.materials.textures.CubeMapTexture;
 import org.rajawali3d.materials.textures.Texture;
 import org.rajawali3d.math.Matrix4;
 import org.rajawali3d.math.vector.Vector3;
-import org.rajawali3d.postprocessing.materials.ShadowMapMaterial;
 import org.rajawali3d.primitives.Cube;
 import org.rajawali3d.renderer.AFrameTask;
 import org.rajawali3d.renderer.Renderer;
@@ -96,7 +94,6 @@ public class Scene {
 	protected ISurface.ANTI_ALIASING_CONFIG mAntiAliasingConfig;
 	protected boolean mEnableDepthBuffer = true;
 	protected boolean mAlwaysClearColorBuffer = true;
-	private ShadowMapMaterial mShadowMapMaterial;
 
 	private final List<Object3D> mChildren;
     private final List<ASceneFrameCallback> mPreCallbacks;
@@ -473,7 +470,6 @@ public class Scene {
                 if (mSceneGraph != null) {
                     //mSceneGraph.addObject(child); //TODO: Uncomment
                 }
-                addShadowMapMaterialPlugin(child, mShadowMapMaterial == null ? null : mShadowMapMaterial.getMaterialPlugin());
             }
         };
         return internalOfferTask(task);
@@ -1481,25 +1477,6 @@ public class Scene {
 
 	public void setAntiAliasingConfig(ISurface.ANTI_ALIASING_CONFIG config) {
 		mAntiAliasingConfig = config;
-	}
-
-	public void setShadowMapMaterial(ShadowMapMaterial material) {
-		mShadowMapMaterial = material;
-	}
-
-	private void addShadowMapMaterialPlugin(Object3D o, ShadowMapMaterialPlugin materialPlugin) {
-		Material m = o.getMaterial();
-
-		if(m != null && m.lightingEnabled()) {
-			if(materialPlugin != null) {
-				m.addPlugin(materialPlugin);
-			} else if(mShadowMapMaterial != null) {
-				m.removePlugin(mShadowMapMaterial.getMaterialPlugin());
-			}
-		}
-
-		for(int i=0; i<o.getNumChildren(); i++)
-			addShadowMapMaterialPlugin(o.getChildAt(i), materialPlugin);
 	}
 
 	/**

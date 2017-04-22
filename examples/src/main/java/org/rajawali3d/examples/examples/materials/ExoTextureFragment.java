@@ -18,7 +18,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DataSource;
@@ -58,7 +58,7 @@ public class ExoTextureFragment extends AExampleFragment implements View.OnTouch
     @Override
     public AExampleRenderer createRenderer() {
         ArrayList<SimpleExoPlayer> exoPlayers = new ArrayList<>();
-        AdaptiveVideoTrackSelection.Factory videoTrackSelectionFactory = new AdaptiveVideoTrackSelection.Factory(BANDWIDTH_METER);
+        AdaptiveTrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(BANDWIDTH_METER);
         TrackSelector trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
         for (int i = 0; i < 3; i++) {
             SimpleExoPlayer exoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(),
@@ -167,7 +167,7 @@ public class ExoTextureFragment extends AExampleFragment implements View.OnTouch
                     mPicker.registerObject(screen);
                 }
             }
-
+            
             DebugVisualizer debugViz = new DebugVisualizer(this);
             debugViz.addChild(new GridFloor(20, 0x555555, 1, 20));
             debugViz.addChild(new CoordinateTrident());

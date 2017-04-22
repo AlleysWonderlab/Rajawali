@@ -1,7 +1,6 @@
 package org.rajawali3d.examples;
 
 import android.Manifest.permission;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Build.VERSION;
@@ -13,7 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import org.rajawali3d.examples.wallpaper.WallpaperPreferenceActivity;
+//import org.rajawali3d.examples.wallpaper.WallpaperPreferenceActivity;
 
 public class LauncherActivity extends AppCompatActivity {
 
@@ -80,7 +79,7 @@ public class LauncherActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_settings:
-                startActivity(new Intent(this, WallpaperPreferenceActivity.class));
+//                startActivity(new Intent(this, WallpaperPreferenceActivity.class));
                 return true;
         }
 
