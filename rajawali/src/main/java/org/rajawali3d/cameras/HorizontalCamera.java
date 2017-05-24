@@ -102,11 +102,11 @@ public class HorizontalCamera extends Camera {
 
                 mGestureListener = new View.OnTouchListener() {
                     public boolean onTouch(View v, MotionEvent event) {
-                        if (event.getAction() == MotionEvent.ACTION_DOWN){
+                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
                             cameraListener.onEventStart();
                         }
                         mScaleDetector.onTouchEvent(event);
-                        if (event.getAction() == MotionEvent.ACTION_UP){
+                        if (event.getAction() == MotionEvent.ACTION_UP) {
                             cameraListener.onEventEnd();
                         }
                         if (!mIsScaling) {
@@ -140,7 +140,13 @@ public class HorizontalCamera extends Camera {
         @Override
         public void onLongPress(MotionEvent e) {
             super.onLongPress(e);
-            System.out.println("onLongPress onLongPress onLongPress");
+            System.out.println("onLongPress onLongPress onLongPress " + e);
+        }
+
+        @Override
+        public void onShowPress(MotionEvent e) {
+            super.onShowPress(e);
+            System.out.println("onShowPress onShowPress onShowPress" + e);
         }
     }
 
