@@ -12,7 +12,7 @@ if (isReleaseBuild()) {
 
 buildscript {
     ext {
-        exo_version = 'r2.3.1'
+        exo_version = 'r2.4.1'
     }
 }
 
