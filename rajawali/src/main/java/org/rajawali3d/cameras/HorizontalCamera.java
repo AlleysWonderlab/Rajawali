@@ -136,6 +136,12 @@ public class HorizontalCamera extends Camera {
             cameraListener.onScroll(event1, event2, distanceX, distanceY);
             return false;
         }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+            super.onLongPress(e);
+            System.out.println("onLongPress onLongPress onLongPress");
+        }
     }
 
     private Double minScale = 50.0;
