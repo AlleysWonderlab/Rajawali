@@ -148,6 +148,18 @@ public class HorizontalCamera extends Camera {
             super.onShowPress(e);
             System.out.println("onShowPress onShowPress onShowPress" + e);
         }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            System.out.println("onSingleTapUp onSingleTapUp onSingleTapUp" + e);
+            return super.onSingleTapUp(e);
+        }
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            System.out.println("onDown onDown onDown" + e);
+            return super.onDown(e);
+        }
     }
 
     private Double minScale = 50.0;
